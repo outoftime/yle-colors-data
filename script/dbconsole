@@ -1,10 +1,3 @@
 #!/bin/bash
 
-if [ -f .env ]
-then
-  export $(cat .env | xargs)
-fi
-
-echo $DATABASE_URL
-
-psql $DATABASE_URL
+bundle exec dotenv bash -c 'psql $DATABASE_URL'
