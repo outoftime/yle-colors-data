@@ -2,6 +2,8 @@
 
 source "https://rubygems.org"
 
+ruby "3.1.1"
+
 gem "dotenv", "2.7.6"
 gem "pg", "1.3.4"
 gem "rake", "13.0.6", require: false
