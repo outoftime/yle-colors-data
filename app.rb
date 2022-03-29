@@ -1,10 +1,15 @@
 require 'sinatra/base'
 require 'sinatra/json'
+require 'sinatra/cross_origin'
 
 require './environment'
 require './db'
 
 class YleColorsData < Sinatra::Base
+  before do
+    headers 'Access-Control-Allow-Origin' => '*'
+  end
+
   get '/states' do
     json(
       current_rolling_averages
