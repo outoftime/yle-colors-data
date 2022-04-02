@@ -6,7 +6,8 @@ require './db'
 
 class YleColorsData < Sinatra::Base
   before do
-    headers 'Access-Control-Allow-Origin' => '*'
+    headers 'Access-Control-Allow-Origin' => '*',
+     'Cache-Control' => 'public, s-max-age=900'
   end
 
   get '/states' do
