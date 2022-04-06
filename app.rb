@@ -38,6 +38,9 @@ class YleColorsData < Sinatra::Base
           .order(Sequel.desc(:date))
           .select(:cases_avg_per_100k, :date)
           .first
+
+    fail Sinatra::NotFound if row.nil?
+
     json(
       "7_day_cases_per_100k": (row[:cases_avg_per_100k] * 7).round,
       date: row[:date].to_s
