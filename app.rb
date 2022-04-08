@@ -1,16 +1,16 @@
-require 'sinatra/base'
-require 'sinatra/json'
+require "sinatra/base"
+require "sinatra/json"
 
-require './environment'
-require './db'
+require "./environment"
+require "./db"
 
 class YleColorsData < Sinatra::Base
   before do
-    headers 'Access-Control-Allow-Origin' => '*',
-     'Cache-Control' => 'public, s-max-age=900'
+    headers "Access-Control-Allow-Origin" => "*",
+      "Cache-Control" => "public, s-max-age=900"
   end
 
-  get '/states' do
+  get "/states" do
     json(
       current_rolling_averages
       .distinct
@@ -20,7 +20,7 @@ class YleColorsData < Sinatra::Base
     )
   end
 
-  get '/states/:state/counties' do |state|
+  get "/states/:state/counties" do |state|
     json(
       current_rolling_averages
         .where(state:)
@@ -31,13 +31,13 @@ class YleColorsData < Sinatra::Base
     )
   end
 
-  get '/states/:state/counties/:county/7_day_cases_per_100k' do |state, county|
+  get "/states/:state/counties/:county/7_day_cases_per_100k" do |state, county|
     row = current_rolling_averages
-          .where(state:)
-          .where(county:)
-          .order(Sequel.desc(:date))
-          .select(:cases_avg_per_100k, :date)
-          .first
+      .where(state:)
+      .where(county:)
+      .order(Sequel.desc(:date))
+      .select(:cases_avg_per_100k, :date)
+      .first
 
     fail Sinatra::NotFound if row.nil?
 
@@ -57,7 +57,7 @@ class YleColorsData < Sinatra::Base
 
   def current_import_id
     DB[:current_imports]
-      .where(table: 'us_counties_rolling_averages')
+      .where(table: "us_counties_rolling_averages")
       .select(:import_id)
   end
 end

@@ -13,5 +13,5 @@ gem "sinatra", "2.2.0"
 gem "sinatra-contrib", "2.2.0", require: false
 
 group :development do
-  gem "rubocop", "1.26.1", require: false
+  gem "standard", "1.9.1", require: false
 end

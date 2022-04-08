@@ -1,13 +1,13 @@
-require 'csv'
-require 'net/http'
-require 'securerandom'
-require 'uri'
+require "csv"
+require "net/http"
+require "securerandom"
+require "uri"
 
-require './db'
+require "./db"
 
-IMPORT_URI = URI.parse('https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-counties-recent.csv')
+IMPORT_URI = URI.parse("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-counties-recent.csv")
 
-class Import
+class NewYorkTimesImport
   def initialize
     @import_id = SecureRandom.uuid
   end
@@ -15,7 +15,7 @@ class Import
   def start
     each_csv_row
       .lazy
-      .select { |row| Date.parse(row['date']) == latest_date }
+      .select { |row| Date.parse(row["date"]) == latest_date }
       .each_slice(1000) do |rows|
       import_rows(rows)
     end
@@ -29,10 +29,10 @@ class Import
 
   def import_rows(rows)
     insert_rows = rows.map do |row|
-      date = Date.parse(row['date'])
-      county = row['county']
-      state = row['state']
-      cases_avg_per_100k = row['cases_avg_per_100k'].to_f
+      date = Date.parse(row["date"])
+      county = row["county"]
+      state = row["state"]
+      cases_avg_per_100k = row["cases_avg_per_100k"].to_f
 
       {
         import_id:,
@@ -47,13 +47,13 @@ class Import
 
   def update_import_id
     DB[:current_imports].insert_conflict(
-      constraint: 'current_imports_table_key',
-      update: { import_id: },
+      constraint: "current_imports_table_key",
+      update: {import_id:},
       update_where: {
-        Sequel[:current_imports][:table] => 'us_counties_rolling_averages'
+        Sequel[:current_imports][:table] => "us_counties_rolling_averages"
       }
     ).insert(
-      table: 'us_counties_rolling_averages',
+      table: "us_counties_rolling_averages",
       import_id:
     )
   end
@@ -70,6 +70,6 @@ class Import
   end
 
   def latest_date
-    @latest_date ||= each_csv_row.lazy.map { |row| Date.parse(row['date']) }.max
+    @latest_date ||= each_csv_row.lazy.map { |row| Date.parse(row["date"]) }.max
   end
 end

@@ -1,2 +1,2 @@
-require 'bundler'
-require 'dotenv/load'
+require "bundler"
+require "dotenv/load"
