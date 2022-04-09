@@ -53,6 +53,7 @@ GEM
       rubocop-performance (= 1.13.3)
     tilt (2.0.10)
     unicode-display_width (2.1.0)
+    yajl-ruby (1.4.2)
 
 PLATFORMS
   x86_64-darwin-21
@@ -67,6 +68,7 @@ DEPENDENCIES
   sinatra (= 2.2.0)
   sinatra-contrib (= 2.2.0)
   standard (= 1.9.1)
+  yajl-ruby (= 1.4.2)
 
 RUBY VERSION
    ruby 3.1.1p18

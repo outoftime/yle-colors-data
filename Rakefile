@@ -32,5 +32,8 @@ namespace :data do
   task import: [:environment] do
     require "./new_york_times_import"
     NewYorkTimesImport.new.start
+
+    require "./covid_act_now_import"
+    CovidActNowImport.new.start
   end
 end
