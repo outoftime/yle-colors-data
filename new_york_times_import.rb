@@ -5,9 +5,9 @@ require "uri"
 
 require "./db"
 
-IMPORT_URI = URI.parse("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-counties-recent.csv")
-
 class NewYorkTimesImport
+  IMPORT_URI = URI.parse("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-counties-recent.csv")
+
   def initialize
     @import_id = SecureRandom.uuid
   end

@@ -4,9 +4,9 @@ require "yajl"
 
 require "./db"
 
-IMPORT_URI = URI.parse("https://api.covidactnow.org/v2/counties.json?apiKey=#{ENV["COVID_ACT_NOW_API_KEY"]}")
-
 class CovidActNowImport
+  IMPORT_URI = URI.parse("https://api.covidactnow.org/v2/counties.json?apiKey=#{ENV["COVID_ACT_NOW_API_KEY"]}")
+
   def start
     DB.transaction do
       table.truncate
@@ -33,7 +33,7 @@ class CovidActNowImport
   end
 
   def each_row(&block)
-    response = Net::HTTP.get(uri)
+    response = Net::HTTP.get(IMPORT_URI)
     Yajl::Parser.parse(response, symbolize_keys: true).each(&block)
   end
 
