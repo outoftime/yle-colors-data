@@ -1,10 +1,15 @@
 require "sinatra/base"
 require "sinatra/json"
+require "sinatra/reloader"
 
 require "./environment"
 require "./db"
 
 class YleColorsData < Sinatra::Base
+  configure :development do
+    register Sinatra::Reloader
+  end
+
   before do
     headers "Access-Control-Allow-Origin" => "*",
       "Cache-Control" => "public, s-max-age=900"
