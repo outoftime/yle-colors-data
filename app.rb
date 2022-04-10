@@ -52,7 +52,7 @@ class YleColorsData < Sinatra::Base
     )
   end
 
-  get "/country/us/states" do
+  get "/countries/us/states" do
     json({states:
       states
       .select(:slug, :name)
@@ -60,7 +60,7 @@ class YleColorsData < Sinatra::Base
       .sort_by { |state| state.fetch(:name) }})
   end
 
-  get "/country/us/states/:state_slug/counties" do |slug|
+  get "/countries/us/states/:state_slug/counties" do |slug|
     state = states.select(:name, :abbreviation).where(slug:).first
     json({
       state: {name: state.fetch(:name)},
@@ -71,7 +71,7 @@ class YleColorsData < Sinatra::Base
     })
   end
 
-  get "/country/us/states/:state_slug/counties/:county_slug/metrics" do |state_slug, county_slug|
+  get "/countries/us/states/:state_slug/counties/:county_slug/metrics" do |state_slug, county_slug|
     state = states.select(:name, :abbreviation).where(slug: state_slug).first
     county_data = covid_act_now_county_data
       .select(:date, :county, :weekly_new_cases_per_100k, :test_positivity_ratio, :vaccinations_completed_ratio)
