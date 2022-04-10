@@ -1,2 +1,4 @@
 require "bundler"
-require "dotenv/load"
+require "dotenv"
+
+Dotenv.load(".env", ".env.local")

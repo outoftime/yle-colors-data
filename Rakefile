@@ -1,11 +1,9 @@
-require "dotenv/tasks"
-
 task :environment do
   require "./environment"
 end
 
 namespace :db do
-  task setup: :dotenv do
+  task setup: :environment do
     require "sequel/core"
     Sequel.extension :migration
   end

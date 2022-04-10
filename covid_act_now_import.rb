@@ -1,3 +1,4 @@
+require "active_support/all"
 require "net/http"
 require "uri"
 require "yajl"
@@ -19,10 +20,12 @@ class CovidActNowImport
   def import_rows(rows)
     insert_rows = rows.map do |row|
       metrics = row[:metrics]
+      county = row.fetch(:county)
       {
         date: Date.parse(row.fetch(:lastUpdatedDate)),
         state: row.fetch(:state),
-        county: row.fetch(:county),
+        county:,
+        county_slug: county.parameterize,
         test_positivity_ratio: metrics.fetch(:testPositivityRatio),
         weekly_new_cases_per_100k: metrics.fetch(:weeklyNewCasesPer100k),
         vaccinations_completed_ratio: metrics.fetch(:vaccinationsCompletedRatio)
