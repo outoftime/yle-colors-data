@@ -1,9 +1,3 @@
-require "ddtrace"
-
-Datadog.configure do |c|
-  c.use :rake
-end
-
 task :environment do
   require "./environment"
 end

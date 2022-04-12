@@ -5,7 +5,6 @@ source "https://rubygems.org"
 ruby "3.1.1"
 
 gem "activesupport", "7.0.2.3"
-gem "ddtrace", "0.54.2"
 gem "dotenv", "2.7.6"
 gem "pg", "1.3.4"
 gem "puma", "5.6.2", require: false
