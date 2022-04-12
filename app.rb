@@ -1,3 +1,4 @@
+require "ddtrace"
 require "sinatra/base"
 require "sinatra/json"
 require "sinatra/reloader"
@@ -5,7 +6,19 @@ require "sinatra/reloader"
 require "./environment"
 require "./db"
 
+Datadog.configure do |c|
+  c.use :sinatra
+end
+
 class YleColorsData < Sinatra::Base
+  configure do
+    use Rack::CommonLogger, $stdout
+  end
+
+  configure :production do
+    register Datadog::Contrib::Sinatra::Tracer
+  end
+
   configure :development do
     register Sinatra::Reloader
   end
